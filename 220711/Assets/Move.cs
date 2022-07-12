@@ -5,10 +5,12 @@ using UnityEngine;
 public class Move : MonoBehaviour
 {
     public float speed = 1;
-    public float time;
+    public float run = 0;
+    public GameObject head;
 
-    bool che = false;
-    void Update()
+    private bool che = false;
+
+    private void Update()
     {
         if (che == true)
         {
@@ -19,12 +21,14 @@ public class Move : MonoBehaviour
         }
         else
         {
-            if (time > 0)
+            if (run > 0)
             {
-                time -= Time.deltaTime;
+                run -= Time.deltaTime;
             }
         }
-        transform.Rotate(0, time, 0);
+
+        head.transform.Rotate(0, run, 0);
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             che = true;
