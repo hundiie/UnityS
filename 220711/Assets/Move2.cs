@@ -4,35 +4,43 @@ using UnityEngine;
 
 public class Move2 : MonoBehaviour
 {
-    public float speed = 1;
+    public float UpSpeed = 1;
     public float moveSpeed = 0.1f;
+    public float rotateSpeed = 0.1f;
+    
     Rigidbody RB;
-    Move aa;
-    void Update()
+    Move mv;
+    private void Start()
     {
-        aa = GetComponent<Move>();
+        mv = gameObject.GetComponent<Move>();
         RB = GetComponent<Rigidbody>();
+    }
+    private void Update()
+    {
+        float inrun = mv.run;
 
-        if (Input.GetKey(KeyCode.Space))
+        if (inrun > 3.0f)
         {
-            RB.AddForce(0, speed, 0);
-        }
-        if (Input.GetKey(KeyCode.W))
-        {
-            RB.AddForce(-moveSpeed, 0, 0);
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            RB.AddForce(moveSpeed, 0, 0);
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            RB.AddForce(0, 0, moveSpeed);
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            RB.AddForce(0, 0, -moveSpeed);
-
+            if (Input.GetKey(KeyCode.Space))
+            {
+                RB.AddForce(0, UpSpeed, 0);
+            }
+            if (Input.GetKey(KeyCode.W))
+            {
+                RB.transform.Translate(-moveSpeed, 0, 0);
+            }
+            if (Input.GetKey(KeyCode.S))
+            {
+                RB.AddForce(moveSpeed, 0, 0);
+            }
+            if (Input.GetKey(KeyCode.D))
+            {
+                transform.Rotate(0, rotateSpeed, 0);
+            }
+            if (Input.GetKey(KeyCode.A))
+            {
+                transform.Rotate(0, -rotateSpeed, 0);
+            }
         }
     }
 }
