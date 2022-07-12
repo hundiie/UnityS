@@ -12,7 +12,10 @@ public class Move : MonoBehaviour
     {
         if (che == true)
         {
-            time += Time.deltaTime;
+            if (run < 5.0f)
+            {
+                run += Time.deltaTime;
+            }
         }
         else
         {
