@@ -6,33 +6,45 @@ public class Move2D : MonoBehaviour
 {
     public float MoveSpeed;
     private Vector3 movedir = Vector3.zero;
-    private GameObject GOBB;
-    public Camera camera;
 
-    Vector3 V3;
+    private GameObject bollet;
+    public GameObject playyer;
+
+    public Camera camerat;
+
+
+    Vector3 mouse_Position;
+    Vector3 player_Position;
     
     private void Start()
     {
-        GOBB = gameObject.transform.GetChild(0).gameObject;
+        bollet = gameObject.transform.GetChild(0).gameObject;
     }
     void Update()
     {
         float X = Input.GetAxisRaw("Horizontal");
         float Y = Input.GetAxisRaw("Vertical");
 
+        mouse_Position = Input.mousePosition;
+        mouse_Position = camerat.ScreenToWorldPoint(mouse_Position);
+        mouse_Position.z += 10;// 카메라 위치에 보이게
+
         movedir = new Vector3(X, Y, 0);
 
-        transform.position += movedir * MoveSpeed * Time.deltaTime;
-        if (Input.GetMouseButtonDown(0))
-        {
-            V3 = Input.mousePosition;
-            V3 = camera.ScreenToWorldPoint(V3);
+        float dx = mouse_Position.x - this.transform.position.x;
+        float dy = mouse_Position.y - this.transform.position.y;
+        float rotateD = Mathf.Atan2(dy,dx)*Mathf.Rad2Deg;
 
-            V3.z += 10;
-            Debug.Log(V3);
-            GameObject bullets = Instantiate(GOBB, transform.position, transform.rotation);
+        this.transform.rotation = Quaternion.Euler(0, 0, rotateD - 90);
+
+        transform.position += movedir * MoveSpeed * Time.deltaTime;
+
+        if (Input.GetMouseButton(0))
+        {
+            Debug.Log(mouse_Position);
+            GameObject bullets = Instantiate(bollet,transform.position,transform.rotation);
             bullets.SetActive(true);
-            bullets.transform.position = V3;
+            bullets.transform.position = playyer.transform.position;
             
         }
 
